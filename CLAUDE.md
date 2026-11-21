@@ -40,7 +40,10 @@ public/media/           # 이미지, GIF, 영상 썸네일, resume.pdf
 
 ### frontmatter 스키마
 
-`title, type, summary, period, team, role, stack[], featured, thumbnail`
+`title, type, summary, period, team, role, stack[], featured, thumbnail, order, links?`
+
+- `order`: number. 작은 숫자가 먼저 나온다 (목록 정렬 기준)
+- `links`: 선택. `{ github?: string, video?: string }`
 
 ### 회사 프로젝트 보안 규칙 (반드시 지킬 것)
 

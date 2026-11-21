@@ -1,0 +1,78 @@
+---
+title: "[더미] Sample Arena — 멀티플레이 아레나 슈터"
+type: personal
+summary: "더미 데이터입니다. 데디케이티드 서버 기반 4인 아레나 슈터를 가정한 개인 프로젝트로, 네트워크 동기화와 히트 판정을 직접 구현한 예시입니다."
+period: "2024.09 – 2025.01"
+team: "1인 개발"
+role: "기획, 프로그래밍 전체"
+stack: ["Unreal Engine 5", "C++", "Replication", "Enhanced Input"]
+featured: true
+thumbnail: "/media/dummy-personal.svg"
+order: 2
+links:
+  github: "https://github.com/example/sample-arena"
+  video: "https://www.youtube.com/watch?v=example"
+---
+
+> 이 문서는 레이아웃 확인용 더미 데이터입니다. 링크와 수치는 모두 가상입니다.
+
+## Overview
+
+최대 4명이 접속해 겨루는 간단한 아레나 슈터입니다.
+Unreal Engine의 네트워크 구조를 직접 다뤄 보려는 목적으로 만든 가상의 개인 프로젝트입니다.
+
+## Project Info
+
+- 기간: 2024.09 – 2025.01
+- 인원: 1인
+- 플랫폼: Windows (데디케이티드 서버)
+- 엔진: Unreal Engine 5.4
+
+## My Role
+
+기획, 게임플레이 프로그래밍, 네트워크 동기화, UI까지 전부 혼자 담당했습니다.
+
+## Architecture
+
+- **GameMode / GameState**: 라운드 진행과 점수 집계는 서버에만 있는 GameMode가 맡고,
+  클라이언트에 보여줄 상태는 GameState로 복제합니다.
+- **Character / Weapon 분리**: 무기는 별도 Actor로 두고, 캐릭터는 장착된 무기에 입력만 전달합니다.
+- **입력**: Enhanced Input으로 입력을 매핑하고, 발사 요청은 Server RPC로 보냅니다.
+
+## Implementation
+
+서버에서 히트를 판정하는 발사 처리 흐름의 예시입니다.
+
+```cpp
+void AArenaWeapon::ServerFire_Implementation(const FVector_NetQuantize& Origin,
+                                             const FVector_NetQuantizeNormal& Direction)
+{
+    FHitResult Hit;
+    const FVector End = Origin + Direction * Range;
+
+    if (GetWorld()->LineTraceSingleByChannel(Hit, Origin, End, ECC_Visibility))
+    {
+        UGameplayStatics::ApplyPointDamage(Hit.GetActor(), Damage, Direction, Hit,
+                                           GetInstigatorController(), this, nullptr);
+    }
+
+    MulticastPlayFireEffects(Hit.ImpactPoint);
+}
+```
+
+## Challenges & Solutions
+
+- **문제**: 핑이 높으면 화면에서 맞힌 적이 서버 판정에서는 빗나가는 일이 잦았습니다.
+- **원인**: 서버는 요청을 받은 시점의 위치로 판정하기 때문에, 클라이언트가 본 시점과 어긋났습니다.
+- **해결**: 서버가 최근 위치 기록을 일정 시간 보관하고, 요청 시점으로 되돌려 판정하는
+  간단한 랙 보정을 구현했습니다.
+
+## Results
+
+- 핑 150ms 환경에서 체감 명중 불일치가 크게 줄었습니다 (가상 수치: 오판정 32% → 6%).
+- 4인 접속 기준 서버 프레임 60fps를 유지했습니다 (가상 수치).
+
+## Retrospective
+
+- 네트워크 기능은 처음부터 "서버가 권한을 가진다"는 원칙으로 설계해야 나중에 고칠 일이 적다는 것을 배웠습니다.
+- 다음에는 Gameplay Ability System을 적용해 스킬 구조를 확장해 보고 싶습니다.

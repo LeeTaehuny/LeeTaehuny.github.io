@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
 import '../styles/global.css';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <html lang="ko">
@@ -12,6 +15,8 @@ import '../styles/global.css';
 		<title>Portfolio</title>
 	</head>
 	<body>
-		<h1 class="text-6xl font-bold">Hello Portfolio</h1>
+		<ul>
+			{projects.map((project) => <li>{project.data.title} ({project.data.type})</li>)}
+		</ul>
 	</body>
 </html>
