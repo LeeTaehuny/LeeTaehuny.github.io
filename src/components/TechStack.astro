@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Section from './Section.astro';
+import { techStack } from '../data/profile';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+
+/** 기술 이름 → 해당 기술을 stack에 포함한 프로젝트 목록 */
+const projectsUsing = (tech: string) => projects.filter((p) => p.data.stack.includes(tech));
+---
+
+<Section id="tech-stack" title="Tech Stack">
+  <div class="grid gap-6 md:grid-cols-2">
+    {techStack.map((group) => (
+      <div class="rounded-xl border border-border p-6">
+        <h3 class="mb-4 text-lg font-bold">{group.category}</h3>
+        <ul class="divide-y divide-border">
+          {group.items.map((tech) => {
+            const used = projectsUsing(tech);
+            return (
+              <li class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:justify-between">
+                <span class="shrink-0 font-medium">{tech}</span>
+                {used.length > 0 && (
+                  <ul class="flex flex-wrap gap-2 sm:justify-end">
+                    {used.map((p) => (
+                      <li>
+                        <a
+                          href={`/projects/${p.id}`}
+                          class="block rounded bg-accent-soft px-2 py-1 text-xs font-medium text-accent transition-colors hover:bg-accent hover:text-white"
+                        >
+                          {p.data.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Section>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  /** 배경을 surface 색으로 칠해 섹션을 번갈아 구분할 때 사용 */
+  tinted?: boolean;
+}
+
+const { id, title, tinted = false } = Astro.props;
+---
+
+<section id={id} class:list={['py-section', tinted && 'bg-surface']}>
+  <div class="mx-auto max-w-content px-6">
+    <h2 class="mb-10 text-3xl font-bold tracking-tight">{title}</h2>
+    <slot />
+  </div>
+</section>

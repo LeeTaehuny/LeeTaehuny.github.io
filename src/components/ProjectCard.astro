@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, summary, stack, thumbnail, type } = project.data;
+const isCompany = type === 'company';
+---
+
+<a
+  href={`/projects/${project.id}`}
+  class="group flex flex-col overflow-hidden rounded-xl border border-border bg-bg transition hover:-translate-y-1 hover:border-accent hover:shadow-lg"
+>
+  <img src={thumbnail} alt="" loading="lazy" class="aspect-video w-full bg-surface object-cover" />
+
+  <div class="flex flex-1 flex-col p-6">
+    <span
+      class:list={[
+        'w-fit rounded-full px-3 py-1 text-xs font-semibold',
+        isCompany ? 'bg-accent text-white' : 'bg-accent-soft text-accent',
+      ]}
+    >
+      {isCompany ? '회사 프로젝트' : '개인 프로젝트'}
+    </span>
+
+    <h3 class="mt-3 text-xl font-bold transition-colors group-hover:text-accent">{title}</h3>
+    <p class="mt-2 flex-1 leading-relaxed text-muted">{summary}</p>
+
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {stack.map((tech) => (
+        <li class="rounded bg-surface px-2 py-1 text-xs font-medium text-muted">{tech}</li>
+      ))}
+    </ul>
+  </div>
+</a>

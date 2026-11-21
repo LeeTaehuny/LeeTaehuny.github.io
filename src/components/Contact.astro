@@ -1,0 +1,24 @@
+---
+import Section from './Section.astro';
+import { profile } from '../data/profile';
+---
+
+<Section id="contact" title="Contact" tinted>
+  <p class="text-lg text-muted">채용 관련 문의는 아래 연락처로 편하게 연락 주세요.</p>
+  <ul class="mt-6 space-y-3 text-lg">
+    <li>
+      <span class="inline-block w-20 font-semibold">Email</span>
+      <a href={`mailto:${profile.email}`} class="text-accent hover:underline">{profile.email}</a>
+    </li>
+    <li>
+      <span class="inline-block w-20 font-semibold">GitHub</span>
+      <a href={profile.github} target="_blank" rel="noopener noreferrer" class="text-accent hover:underline">
+        {profile.github.replace(/^https?:\/\//, '')}
+      </a>
+    </li>
+  </ul>
+</Section>
+
+<footer class="border-t border-border py-8 text-center text-sm text-muted">
+  © {new Date().getFullYear()} {profile.name}
+</footer>

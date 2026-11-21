@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Section from './Section.astro';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<Section id="projects" title="Projects" tinted>
+  <div class="grid gap-6 md:grid-cols-2">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</Section>

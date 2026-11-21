@@ -1,22 +1,26 @@
 ---
 import { getCollection } from 'astro:content';
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
+import TechStack from '../components/TechStack.astro';
+import Contact from '../components/Contact.astro';
+import { profile } from '../data/profile';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<html lang="ko">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Portfolio</title>
-	</head>
-	<body>
-		<ul>
-			{projects.map((project) => <li>{project.data.title} ({project.data.type})</li>)}
-		</ul>
-	</body>
-</html>
+<BaseLayout title={`${profile.name} | ${profile.role} 포트폴리오`} description={profile.tagline}>
+  <Nav />
+  <main>
+    <Hero />
+    <About />
+    <Experience />
+    <Projects projects={projects} />
+    <TechStack projects={projects} />
+    <Contact />
+  </main>
+</BaseLayout>
