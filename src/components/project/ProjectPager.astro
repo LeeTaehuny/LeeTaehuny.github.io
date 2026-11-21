@@ -1,0 +1,32 @@
+---
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  prev: Project | null;
+  next: Project | null;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav aria-label="프로젝트 이동" class="mt-section border-t border-border pt-10">
+  <div class="grid gap-4 sm:grid-cols-2">
+    {prev ? (
+      <a href={`/projects/${prev.id}`} class="group rounded-xl border border-border p-5 transition-colors hover:border-accent">
+        <span class="text-sm text-muted">← 이전 프로젝트</span>
+        <span class="mt-1 block font-semibold group-hover:text-accent">{prev.data.title}</span>
+      </a>
+    ) : <div class="hidden sm:block" />}
+
+    {next && (
+      <a href={`/projects/${next.id}`} class="group rounded-xl border border-border p-5 text-right transition-colors hover:border-accent">
+        <span class="text-sm text-muted">다음 프로젝트 →</span>
+        <span class="mt-1 block font-semibold group-hover:text-accent">{next.data.title}</span>
+      </a>
+    )}
+  </div>
+
+  <div class="mt-8 text-center">
+    <a href="/#projects" class="font-semibold text-accent hover:underline">메인으로 돌아가기</a>
+  </div>
+</nav>

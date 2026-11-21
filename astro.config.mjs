@@ -13,5 +13,11 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
+  markdown: {
+    shikiConfig: {
+      theme: 'github-light'
+    }
+  },
+
   integrations: [mdx()]
 });

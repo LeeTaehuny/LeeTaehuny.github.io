@@ -1,0 +1,18 @@
+---
+/** MDX용 GIF + 캡션. public/media의 .gif 파일만 허용한다. */
+import Figure from './Figure.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+
+if (!src.toLowerCase().endsWith('.gif')) {
+  throw new Error(`[Gif] .gif 파일만 사용할 수 있습니다: ${src}`);
+}
+---
+
+<Figure src={src} alt={alt} caption={caption} />

@@ -1,0 +1,64 @@
+---
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { period, team, role, platform, engine, stack, links } = Astro.props.project.data;
+
+const rows = [
+  { label: '기간', value: period },
+  { label: '팀 구성', value: team },
+  { label: '역할', value: role },
+  { label: '플랫폼', value: platform },
+  { label: '엔진', value: engine },
+].filter((row): row is { label: string; value: string } => Boolean(row.value));
+
+const linkItems = [
+  { label: 'GitHub', href: links?.github },
+  { label: '영상', href: links?.video },
+].filter((link): link is { label: string; href: string } => Boolean(link.href));
+---
+
+<section id="project-info" aria-labelledby="project-info-title" class="rounded-xl border border-border bg-surface p-6 md:p-8">
+  <h2 id="project-info-title" class="text-2xl font-bold tracking-tight">Project Info</h2>
+
+  <dl class="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+    {rows.map((row) => (
+      <div>
+        <dt class="text-sm font-medium text-muted">{row.label}</dt>
+        <dd class="mt-1 font-medium">{row.value}</dd>
+      </div>
+    ))}
+
+    <div class="sm:col-span-2">
+      <dt class="text-sm font-medium text-muted">사용 기술</dt>
+      <dd class="mt-2">
+        <ul class="flex flex-wrap gap-2">
+          {stack.map((tech) => (
+            <li class="rounded bg-bg px-2 py-1 text-sm font-medium">{tech}</li>
+          ))}
+        </ul>
+      </dd>
+    </div>
+
+    {linkItems.length > 0 && (
+      <div class="sm:col-span-2">
+        <dt class="text-sm font-medium text-muted">링크</dt>
+        <dd class="mt-2 flex flex-wrap gap-3">
+          {linkItems.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-lg border border-accent px-4 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+        </dd>
+      </div>
+    )}
+  </dl>
+</section>

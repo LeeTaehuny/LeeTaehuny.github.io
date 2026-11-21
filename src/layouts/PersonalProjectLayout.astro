@@ -1,0 +1,53 @@
+---
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ProjectHeader from '../components/project/ProjectHeader.astro';
+import ProjectInfo from '../components/project/ProjectInfo.astro';
+import ProjectPager from '../components/project/ProjectPager.astro';
+import Toc from '../components/project/Toc.astro';
+import type { Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  prev: Project | null;
+  next: Project | null;
+  headings: MarkdownHeading[];
+}
+
+const { project, prev, next, headings } = Astro.props;
+
+const tocItems = [
+  { slug: 'project-info', text: 'Project Info' },
+  ...headings.filter((h) => h.depth === 2).map((h) => ({ slug: h.slug, text: h.text })),
+];
+---
+
+<BaseLayout title={`${project.data.title} | 포트폴리오`} description={project.data.summary}>
+  <Nav />
+  <main class="pt-nav">
+    <div class="mx-auto max-w-content px-6 py-section">
+      <div class="lg:flex lg:gap-12">
+        <article class="min-w-0 flex-1">
+          <ProjectHeader project={project} />
+          <div class="mt-12">
+            <ProjectInfo project={project} />
+          </div>
+          <div class="prose-content mt-12">
+            <slot />
+          </div>
+        </article>
+
+        <aside class="hidden w-56 shrink-0 lg:block">
+          <div class="sticky top-nav pt-8">
+            <Toc items={tocItems} />
+          </div>
+        </aside>
+      </div>
+
+      <ProjectPager prev={prev} next={next} />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

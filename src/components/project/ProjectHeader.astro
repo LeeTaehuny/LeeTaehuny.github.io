@@ -1,0 +1,24 @@
+---
+import type { Project } from '../../lib/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { title, summary, thumbnail, type } = Astro.props.project.data;
+const isCompany = type === 'company';
+---
+
+<header>
+  <span
+    class:list={[
+      'inline-block rounded-full px-3 py-1 text-xs font-semibold',
+      isCompany ? 'bg-accent text-white' : 'bg-accent-soft text-accent',
+    ]}
+  >
+    {isCompany ? '회사 프로젝트' : '개인 프로젝트'}
+  </span>
+  <h1 class="mt-4 text-3xl font-bold tracking-tight md:text-4xl">{title}</h1>
+  <p class="mt-4 text-lg leading-relaxed text-muted">{summary}</p>
+  <img src={thumbnail} alt="" class="mt-8 aspect-video w-full rounded-xl border border-border bg-surface object-cover" />
+</header>

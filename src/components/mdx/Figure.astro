@@ -1,0 +1,19 @@
+---
+/** MDX용 이미지 + 캡션. 미디어는 public/media에 둔 파일만 허용한다. */
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+
+if (!src.startsWith('/media/')) {
+  throw new Error(`[Figure] src는 /media/로 시작해야 합니다 (외부 이미지 금지): ${src}`);
+}
+---
+
+<figure class="my-8">
+  <img src={src} alt={alt} loading="lazy" class="w-full rounded-lg border border-border bg-surface" />
+  {caption && <figcaption class="mt-3 text-center text-sm text-muted">{caption}</figcaption>}
+</figure>

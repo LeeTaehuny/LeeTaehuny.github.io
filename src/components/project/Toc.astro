@@ -1,0 +1,62 @@
+---
+interface Props {
+  items: { slug: string; text: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="목차" data-toc>
+  <p class="mb-3 text-sm font-semibold">목차</p>
+  <ul class="border-l-2 border-border text-sm">
+    {items.map((item) => (
+      <li>
+        <a
+          href={`#${item.slug}`}
+          data-toc-link={item.slug}
+          class="-ml-0.5 block border-l-2 border-transparent py-1.5 pl-4 text-muted transition-colors hover:text-text data-active:border-accent data-active:font-semibold data-active:text-accent"
+        >
+          {item.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+  const targets = links
+    .map((link) => document.getElementById(link.dataset.tocLink ?? ''))
+    .filter((el): el is HTMLElement => el !== null);
+
+  // 화면 상단(고정 내비 아래)에서 이 거리 안으로 들어온 마지막 섹션을 '현재 섹션'으로 본다.
+  const ACTIVE_OFFSET = 120;
+
+  const update = () => {
+    let current = targets[0];
+    for (const target of targets) {
+      if (target.getBoundingClientRect().top <= ACTIVE_OFFSET) current = target;
+    }
+    // 페이지 끝에 닿으면 마지막 섹션을 강조한다 (짧은 마지막 섹션 대응).
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      current = targets[targets.length - 1];
+    }
+    links.forEach((link) => link.toggleAttribute('data-active', link.dataset.tocLink === current?.id));
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  };
+
+  if (targets.length > 0) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>

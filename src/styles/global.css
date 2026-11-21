@@ -32,10 +32,72 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: var(--spacing-nav);
+    scroll-padding-top: calc(var(--spacing-nav) + var(--spacing) * 6);
   }
 
   body {
     @apply bg-bg font-sans text-text antialiased;
+  }
+}
+
+/* 프로젝트 상세 MDX 본문 스타일 */
+@layer components {
+  .prose-content {
+    @apply text-lg leading-relaxed;
+
+    & > :first-child {
+      @apply mt-0;
+    }
+
+    & h2 {
+      @apply mt-16 mb-4 text-2xl font-bold tracking-tight md:text-3xl;
+    }
+
+    & h3 {
+      @apply mt-10 mb-3 text-xl font-bold;
+    }
+
+    & p {
+      @apply my-4;
+    }
+
+    & ul {
+      @apply my-4 list-disc space-y-2 pl-6;
+    }
+
+    & ol {
+      @apply my-4 list-decimal space-y-2 pl-6;
+    }
+
+    & li::marker {
+      @apply text-muted;
+    }
+
+    & strong {
+      @apply font-semibold;
+    }
+
+    & a {
+      @apply font-medium text-accent underline underline-offset-4 hover:text-accent-hover;
+    }
+
+    & blockquote {
+      @apply my-6 rounded-r-lg border-l-4 border-accent bg-surface px-5 py-4 text-base text-muted;
+
+      & p {
+        @apply my-0;
+      }
+    }
+
+    /* 인라인 코드 */
+    & :not(pre) > code {
+      @apply rounded bg-surface px-1.5 py-0.5 font-mono text-base;
+    }
+
+    /* 코드 블록: Shiki(github-light)가 토큰 색을 인라인으로 넣는다. 배경만 테마 토큰으로 덮어쓴다. */
+    & pre {
+      @apply my-6 overflow-x-auto rounded-lg border border-border p-5 font-mono text-sm leading-relaxed;
+      background-color: var(--color-surface) !important;
+    }
   }
 }

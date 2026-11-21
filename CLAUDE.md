@@ -38,18 +38,31 @@ public/media/           # 이미지, GIF, 영상 썸네일, resume.pdf
 - **personal**: Overview, Project Info, My Role, Architecture, Implementation,
   Challenges & Solutions, Results, Retrospective
 
+Project Info와 사용 기술은 frontmatter(period, team, role, platform, engine, stack, links)에서
+자동 생성되는 박스로 표시된다. MDX 본문에는 이 두 섹션을 쓰지 않는다.
+
 ### frontmatter 스키마
 
-`title, type, summary, period, team, role, stack[], featured, thumbnail, order, links?`
+`title, type, summary, period, team, role, stack[], featured, thumbnail, order, platform?, engine?, links?`
 
 - `order`: number. 작은 숫자가 먼저 나온다 (목록 정렬 기준)
+- `platform`: 선택. 예: `"PC, Dedicated Server"`
+- `engine`: 선택. 예: `"Unreal Engine 5.3"`
 - `links`: 선택. `{ github?: string, video?: string }`
+
+### MDX 미디어 컴포넌트 (import 없이 사용)
+
+- `<Figure src="/media/..." alt="..." caption="..." />`: 이미지 + 캡션
+- `<Gif src="/media/....gif" alt="..." caption="..." />`: GIF + 캡션
+- `<YouTube id="영상ID11자리" title="..." caption="..." />`: 유튜브 임베드
 
 ### 회사 프로젝트 보안 규칙 (반드시 지킬 것)
 
 - 회사 홈페이지에 이미 공개된 대표 이미지와 작업 내용 설명만 사용한다.
 - 코드, 클래스 구조도, 시스템 설계도, 내부 스크린샷, 통신 명세는 넣지 않는다.
 - 기술적 내용은 "어떤 문제를 어떤 방식으로 접근했는지"를 일반적인 말로만 서술한다.
+- 인라인 코드는 공개된 엔진 API 이름만 사용하고, 회사 내부 클래스명·함수명은 쓰지 않는다.
+- company 파일에 코드 블록(```, ~~~, `<pre>`, `<code>`)이 있으면 빌드가 실패한다 (`src/lib/projects.ts`).
 - 판단이 애매하면 작성하지 말고 나에게 먼저 묻는다.
 
 ## 디자인 규칙

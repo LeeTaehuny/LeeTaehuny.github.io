@@ -1,0 +1,29 @@
+---
+/** MDX용 유튜브 임베드. id에는 URL이 아니라 11자리 영상 ID를 넣는다. */
+interface Props {
+  id: string;
+  title: string;
+  caption?: string;
+}
+
+const { id, title, caption } = Astro.props;
+
+if (!/^[A-Za-z0-9_-]{11}$/.test(id)) {
+  throw new Error(`[YouTube] id는 11자리 영상 ID여야 합니다 (URL 전체가 아님): ${id}`);
+}
+---
+
+<figure class="my-8">
+  <div class="aspect-video w-full overflow-hidden rounded-lg border border-border bg-surface">
+    <iframe
+      src={`https://www.youtube-nocookie.com/embed/${id}`}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+      class="size-full"
+    ></iframe>
+  </div>
+  {caption && <figcaption class="mt-3 text-center text-sm text-muted">{caption}</figcaption>}
+</figure>

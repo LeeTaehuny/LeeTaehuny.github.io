@@ -15,6 +15,8 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     thumbnail: z.string().startsWith('/media/'),
     order: z.number(),
+    platform: z.string().optional(),
+    engine: z.string().optional(),
     links: z
       .object({
         github: z.string().url().optional(),
