@@ -6,6 +6,7 @@ import ProjectHeader from '../components/project/ProjectHeader.astro';
 import ProjectInfo from '../components/project/ProjectInfo.astro';
 import ProjectPager from '../components/project/ProjectPager.astro';
 import type { Project } from '../lib/projects';
+import { profile } from '../data/profile';
 
 interface Props {
   project: Project;
@@ -16,7 +17,12 @@ interface Props {
 const { project, prev, next } = Astro.props;
 ---
 
-<BaseLayout title={`${project.data.title} | 포트폴리오`} description={project.data.summary}>
+<BaseLayout
+  title={`${project.data.title} | ${profile.name} 포트폴리오`}
+  description={project.data.summary}
+  image={project.data.thumbnail}
+  type="article"
+>
   <Nav />
   <main class="pt-nav">
     <article class="mx-auto max-w-3xl px-6 py-section">

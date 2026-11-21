@@ -13,7 +13,10 @@ const projects = defineCollection({
     role: z.string(),
     stack: z.array(z.string()),
     featured: z.boolean().default(false),
-    thumbnail: z.string().startsWith('/media/'),
+    // SNS 미리보기(og:image) 호환을 위해 PNG/JPG만 허용. SVG·WebP 등은 변환해서 넣는다.
+    thumbnail: z
+      .string()
+      .regex(/^\/media\/.+\.(png|jpe?g)$/i, 'thumbnail은 /media/ 아래의 PNG 또는 JPG 파일이어야 합니다.'),
     order: z.number(),
     platform: z.string().optional(),
     engine: z.string().optional(),

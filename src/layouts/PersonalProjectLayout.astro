@@ -8,6 +8,7 @@ import ProjectInfo from '../components/project/ProjectInfo.astro';
 import ProjectPager from '../components/project/ProjectPager.astro';
 import Toc from '../components/project/Toc.astro';
 import type { Project } from '../lib/projects';
+import { profile } from '../data/profile';
 
 interface Props {
   project: Project;
@@ -24,7 +25,12 @@ const tocItems = [
 ];
 ---
 
-<BaseLayout title={`${project.data.title} | 포트폴리오`} description={project.data.summary}>
+<BaseLayout
+  title={`${project.data.title} | ${profile.name} 포트폴리오`}
+  description={project.data.summary}
+  image={project.data.thumbnail}
+  type="article"
+>
   <Nav />
   <main class="pt-nav">
     <div class="mx-auto max-w-content px-6 py-section">

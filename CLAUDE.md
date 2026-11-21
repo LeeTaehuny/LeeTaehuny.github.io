@@ -73,6 +73,11 @@ Project Info와 사용 기술은 frontmatter(period, team, role, platform, engin
 - 색, 폰트, 간격은 Tailwind 테마에 정의해 두고 그것만 사용
 - 기술 스택에 숙련도 바(%)를 쓰지 않는다. 대신 사용한 프로젝트를 태그로 연결
 - 외부 이미지 링크 금지, 미디어는 `public/media`에 둔다
+- 프로젝트 썸네일은 PNG 또는 JPG만 사용한다 (권장 16:9, SNS 미리보기 호환).
+  WebP 등 다른 형식은 PNG 또는 JPG로 변환해서 넣는다. 스키마에서 검사하므로 다른 형식이면 빌드가 실패한다.
+- 기본 OG 이미지는 `public/media/og-default.png` (1200x630)
+- favicon(SVG, 32x32 PNG, apple-touch-icon 180x180)은 `src/lib/favicon.ts`가
+  `profile.ts` 이름 첫 글자와 테마 accent 색으로 빌드 시 생성한다. 정적 favicon 파일을 따로 두지 않는다.
 
 ## 작업 방식
 
