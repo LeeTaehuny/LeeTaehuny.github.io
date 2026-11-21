@@ -89,8 +89,20 @@ Project Info와 사용 기술은 frontmatter(period, team, role, platform, engin
 
 ## 진행 단계
 
-1. Astro 초기화 + Tailwind + 배포 파이프라인
-2. 콘텐츠 컬렉션 스키마 + 더미 프로젝트 (company 1, personal 1)
-3. 메인 페이지 레이아웃
-4. 프로젝트 상세 페이지 템플릿 (company / personal)
-5. 실제 콘텐츠 입력
+- [x] 1. Astro 초기화 + Tailwind + 배포 파이프라인
+- [x] 2. 콘텐츠 컬렉션 스키마 + 더미 프로젝트 (company 1, personal 1)
+- [x] 3. 메인 페이지 레이아웃
+- [x] 4. 프로젝트 상세 페이지 템플릿 (company / personal)
+- [x] 마무리: 메타 태그(OG/Twitter), favicon, 404 페이지, sitemap
+- [ ] 5. 실제 콘텐츠 입력 ← **다음 할 일**
+  - `src/data/profile.ts` (이름, 소개, 경력, Tech Stack, 연락처)
+  - `public/media/resume.pdf`
+  - `public/media/og-default.png` (1200x630)
+  - 프로젝트 썸네일 (PNG/JPG) 및 더미 프로젝트 교체
+
+### 남은 작업 메모
+
+- `@astrojs/check`를 devDependency로 추가하고 빌드 스크립트에 `astro check` 연결
+  (예: `"build": "astro check && astro build"`)
+- favicon PNG 생성(`src/lib/favicon.ts`, opentype.js + sharp)에서 빌드 오류가 나면
+  정적 파일(`public/favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png`)로 단순화
