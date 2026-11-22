@@ -5,7 +5,7 @@
 
 export interface Profile {
   name: string;
-  /** 영문 이름. Hero에서 한글 이름 옆에 작게 표시된다. */
+  /** 영문 이름. 현재 화면에는 표시하지 않는다. */
   nameEn: string;
   role: string;
   tagline: string;
@@ -42,7 +42,7 @@ export const profile: Profile = {
   nameEn: 'LeeTaehyun',
   role: 'Unreal Engine 클라이언트 프로그래머',
   tagline:
-    'Unreal Engine C++와 Dedicated Server를 기반으로 멀티플레이어 및 실시간 시뮬레이션 시스템을 개발하는 클라이언트 프로그래머입니다.',
+    'Unreal Engine C++와 Dedicated Server 환경에서 게임플레이 및 네트워크 시스템을 개발해 온 클라이언트 프로그래머입니다.',
   about: [
     'Unreal Engine 5와 C++를 활용하여 실시간 멀티플레이어 시뮬레이션 클라이언트를 개발하고 있습니다. 훈련 진행 및 제어 로직부터 객체의 이동, 전투, 상태 관리 등 게임플레이 시스템을 구현하고 있으며, **Dedicated Server 환경에서 Replication과 RPC를 활용한 서버-클라이언트 간 상태 동기화**를 중점적으로 담당하고 있습니다. 또한 TCP/UDP 소켓 통신과 DIS 프로토콜을 활용한 외부 시스템 연동을 통해 **실시간 분산 시뮬레이션 환경 구현**에 기여하고 있습니다.',
   ],
