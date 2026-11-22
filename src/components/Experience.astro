@@ -12,7 +12,11 @@ import { experiences } from '../data/profile';
         <h3 class="mt-1 text-xl font-bold">{exp.company}</h3>
         <p class="font-medium text-accent">{exp.position}</p>
         <ul class="mt-3 list-disc space-y-1 pl-5 text-muted">
-          {exp.tasks.map((task) => <li>{task}</li>)}
+          {exp.tasks.map((task) => (
+            <li>
+              <strong class="font-semibold text-text">{task.title}</strong>: {task.detail}
+            </li>
+          ))}
         </ul>
       </li>
     ))}

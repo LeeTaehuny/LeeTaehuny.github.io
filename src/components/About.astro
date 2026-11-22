@@ -1,10 +1,15 @@
 ---
 import Section from './Section.astro';
 import { profile } from '../data/profile';
+import { parseBold } from '../lib/richText';
 ---
 
 <Section id="about" title="About" tinted>
   <div class="max-w-3xl space-y-4 text-lg leading-relaxed">
-    {profile.about.map((paragraph) => <p>{paragraph}</p>)}
+    {profile.about.map((paragraph) => (
+      <p>
+        {parseBold(paragraph).map((seg) => (seg.bold ? <strong class="font-semibold">{seg.text}</strong> : seg.text))}
+      </p>
+    ))}
   </div>
 </Section>

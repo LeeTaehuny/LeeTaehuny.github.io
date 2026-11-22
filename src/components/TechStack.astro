@@ -16,14 +16,17 @@ const projectsUsing = (tech: string) => projects.filter((p) => p.data.stack.incl
 <Section id="tech-stack" title="Tech Stack">
   <div class="grid gap-6 md:grid-cols-2">
     {techStack.map((group) => (
-      <div class="rounded-xl border border-border p-6">
-        <h3 class="mb-4 text-lg font-bold">{group.category}</h3>
+      <div class:list={['rounded-xl border border-border p-6', group.learning && 'border-dashed']}>
+        <h3 class="mb-4 flex items-baseline gap-2 text-lg font-bold">
+          {group.category}
+          {group.learning && <span class="text-sm font-medium text-muted">학습 중</span>}
+        </h3>
         <ul class="divide-y divide-border">
           {group.items.map((tech) => {
             const used = projectsUsing(tech);
             return (
               <li class="flex flex-col gap-2 py-3 sm:flex-row sm:items-start sm:justify-between">
-                <span class="shrink-0 font-medium">{tech}</span>
+                <span class:list={['shrink-0 font-medium', group.learning && 'text-muted']}>{tech}</span>
                 {used.length > 0 && (
                   <ul class="flex flex-wrap gap-2 sm:justify-end">
                     {used.map((p) => (

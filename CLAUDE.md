@@ -49,6 +49,7 @@ Project Info와 사용 기술은 frontmatter(period, team, role, platform, engin
 - `platform`: 선택. 예: `"PC, Dedicated Server"`
 - `engine`: 선택. 예: `"Unreal Engine 5.3"`
 - `links`: 선택. `{ github?: string, video?: string }`
+- `stack`: 프로젝트 frontmatter의 stack 값은 profile.ts Tech Stack과 같은 표기를 쓴다 (예: Unreal Engine 5, C++)
 
 ### MDX 미디어 컴포넌트 (import 없이 사용)
 
